@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+/* Single accent serif: Cormorant Garamond (Trajan-adjacent transitional serif, pairs with the LA REINE wordmark) */
+/* Single body sans: Inter */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* LA REINE — Editorial bridal design system. Ivory · Noir · Or. */
+
+@layer base {
+  :root {
+    /* Editorial palette — HSL */
+    --background: 40 33% 96%;          /* ivory #F7F2E9 */
+    --foreground: 0 0% 7%;             /* deep noir */
+
+    --card: 40 33% 96%;
+    --card-foreground: 0 0% 7%;
+
+    --popover: 40 33% 96%;
+    --popover-foreground: 0 0% 7%;
+
+    --primary: 0 0% 7%;                /* black */
+    --primary-foreground: 40 33% 96%;
+
+    --secondary: 38 25% 90%;
+    --secondary-foreground: 0 0% 7%;
+
+    --muted: 38 20% 88%;
+    --muted-foreground: 0 0% 35%;
+
+    --accent: 38 38% 55%;              /* subtle gold */
+    --accent-foreground: 0 0% 7%;
+
+    --gold: 38 42% 52%;
+    --gold-soft: 38 38% 70%;
+    --ivory: 40 33% 96%;
+    --ivory-deep: 38 25% 90%;
+    --noir: 0 0% 7%;
+
+    --destructive: 0 60% 40%;
+    --destructive-foreground: 40 33% 96%;
+
+    --border: 0 0% 7% / 0.12;
+    --input: 0 0% 7% / 0.18;
+    --ring: 38 42% 52%;
+
+    --radius: 0;
+
+    /* Typography */
+    --font-display: 'Cormorant Garamond', 'Didot', 'Bodoni 72', serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+
+    /* Motion */
+    --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-soft: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+    --sidebar-background: 40 33% 96%;
+    --sidebar-foreground: 0 0% 7%;
+    --sidebar-primary: 0 0% 7%;
+    --sidebar-primary-foreground: 40 33% 96%;
+    --sidebar-accent: 38 25% 90%;
+    --sidebar-accent-foreground: 0 0% 7%;
+    --sidebar-border: 0 0% 7% / 0.1;
+    --sidebar-ring: 38 42% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: hsl(var(--noir));
+    color: hsl(var(--ivory));
+  }
+}
+
+@layer components {
+  .display-xl {
+    font-family: var(--font-display);
+    font-weight: 300;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+  }
+
+  /* Refined micro-label — italic serif, lowercase, no caps tracking */
+  .editorial-eyebrow {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 0.95rem;
+    letter-spacing: 0;
+    text-transform: none;
+    font-weight: 400;
+  }
+
+  /* Bolder CTA — solid noir, gold hover */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-3 bg-noir text-ivory px-8 py-4 font-display italic text-lg transition-all duration-500;
+  }
+  .btn-primary:hover {
+    @apply bg-gold text-noir;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-3 border-2 border-noir text-noir px-8 py-4 font-display italic text-lg transition-all duration-500;
+  }
+  .btn-outline:hover {
+    @apply bg-noir text-ivory;
+  }
+
+  .gold-line {
+    background: linear-gradient(90deg, transparent, hsl(var(--gold)) 20%, hsl(var(--gold)) 80%, transparent);
+    height: 1px;
+  }
+
+  .reveal-mask {
+    clip-path: inset(0 100% 0 0);
+    animation: reveal-x 1.4s var(--ease-editorial) forwards;
+  }
+
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(28px);
+    animation: reveal-up 1s var(--ease-editorial) forwards;
+  }
+
+  .reveal-fade {
+    opacity: 0;
+    animation: reveal-fade 1.6s var(--ease-soft) forwards;
+  }
+
+  .hover-zoom img {
+    transition: transform 1.4s var(--ease-editorial), filter 0.8s ease;
+  }
+  .hover-zoom:hover img {
+    transform: scale(1.06);
+    filter: brightness(0.92);
+  }
+
+  .underline-grow {
+    position: relative;
+    display: inline-block;
+  }
+  .underline-grow::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -4px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.6s var(--ease-editorial);
+  }
+  .underline-grow:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .marquee-track {
+    animation: marquee 40s linear infinite;
+  }
+}
+
+@keyframes reveal-x {
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes reveal-up {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes reveal-fade {
+  to { opacity: 1; }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes slow-zoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+.kenburns {
+  animation: slow-zoom 14s ease-out forwards;
+}
